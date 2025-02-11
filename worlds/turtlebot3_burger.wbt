@@ -8,13 +8,14 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Roughcast.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/robotis/turtlebot/protos/TurtleBot3Burger.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/robotis/protos/RobotisLds01.proto"
+EXTERNPROTO "../protos/SolidBox.proto"
 
 WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation -0.06222531655574573 0.9836882396683798 0.16877635236507976 0.717188296715101
-  position -0.725146893802487 0.018466111880543066 0.7042869146894328
+  orientation -0.19653599719088158 0.9795690982346271 0.0426378187995717 1.0012857490502316
+  position -2.374425933098121 0.04694480818678881 4.218006304461413
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -378,6 +379,107 @@ Wall {
     }
   }
 }
+SolidBox {
+  translation 0.12 -0.3 0.16
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
+SolidBox {
+  translation 0.12 -0.55 0.16
+  name "box(1)"
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
+SolidBox {
+  translation 0.12 0.45 0.16
+  name "box(2)"
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
+SolidBox {
+  translation 0.38 -0.07 0.16
+  name "box(3)"
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
+SolidBox {
+  translation 0.12 -0.07 0.16
+  name "box(4)"
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
+SolidBox {
+  translation 0.12 0.2 0.16
+  name "box(5)"
+  size 0.2 0.2 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/default/worlds/textures/tagged_wall.jpg"
+      ]
+    }
+    roughness 0.5
+    metalness 0
+  }
+  physics Physics {
+  }
+}
 Wall {
   translation -1.07 -0.05 0.12
   rotation -6.78095e-09 6.78095e-09 1 3.14159
@@ -415,24 +517,18 @@ Wall {
   }
 }
 TurtleBot3Burger {
-  hidden position_0_0 3.3455764824823035e-10
-  hidden position_0_1 9.863083320015193e-07
-  hidden position_0_2 281.5178278484427
-  hidden position2_0_2 -269.4550306521161
-  hidden position3_0_2 -41.32985149562899
-  hidden linearVelocity_0 -4.2766764589673356e-07 -1.4836622458341329e-06 1.306981482711546e-05
-  hidden angularVelocity_0 2.2374396032088928e-05 -6.461597668276425e-06 -7.910808886738283e-08
-  hidden rotation_9 0 1 0 1.9693769040417974
-  hidden linearVelocity_9 -6.487584201056707e-07 -2.051217761436181e-06 1.1307955094327374e-05
-  hidden angularVelocity_9 2.2374396053711863e-05 -6.461597696208775e-06 -7.910808818978455e-08
-  hidden rotation_10 -0.5531252843921005 2.2807415410842152e-06 0.8330980853182631 3.141593574876663
-  hidden linearVelocity_10 -6.328885331485367e-07 -2.4170413503583942e-06 1.4871189875704427e-05
-  hidden angularVelocity_10 2.2365069473190987e-05 -6.461545317341131e-06 -8.914640689129837e-08
-  hidden rotation_11 -0.556778919720038 0.08289572146766905 -0.8265140857346244 3.7013768133740896
-  hidden linearVelocity_11 -1.1535567549483257e-07 -4.113871602943693e-07 1.345264328295522e-05
-  hidden angularVelocity_11 0.9247858305436942 0.036384589980167005 1.9309955330941915e-07
-  translation -0.20627742389846312 0.08432207554718396 0.258293846310992
-  rotation 0.00179220499956347 -0.9999966669635212 0.0018585109867450182 1.5657144965936274
+  hidden position_0_0 3.6519374579518764e-10
+  hidden position_0_1 9.86272473935192e-07
+  hidden position_0_2 281.5178620180032
+  hidden position2_0_2 -269.4536685090957
+  hidden position3_0_2 -41.32985233237742
+  hidden linearVelocity_0 -8.265083186307318e-08 -7.129876661979118e-10 1.4758142967261303e-07
+  hidden angularVelocity_0 1.151460541459108e-08 -1.7105659659481025e-06 7.827413929821002e-10
+  hidden rotation_9 0 1 0 1.9693769111594213
+  hidden rotation_10 -0.5531252844070368 2.280741541092472e-06 0.8330980853083464 3.141593574876663
+  hidden rotation_11 -0.5570072338337995 0.08321321395949384 -0.826328326078291 3.7024557694775884
+  translation -0.20611622906321175 0.08432127405377193 0.15950784203998464
+  rotation 0.0002779608883908346 -0.9320378638593575 0.36236079129816245 0.010050138968300606
   controller "my_controller"
   controllerArgs [
     ""
