@@ -2,19 +2,19 @@
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/robotis/turtlebot/protos/TurtleBot3Burger.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/BrushedAluminium.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/apartment_structure/protos/Wall.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Roughcast.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/robotis/turtlebot/protos/TurtleBot3Burger.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/robotis/protos/RobotisLds01.proto"
 
 WorldInfo {
   basicTimeStep 64
 }
 Viewpoint {
-  orientation -6.90708922719992e-05 0.9999999731793118 0.00022106693008898176 0.6056665309267193
-  position -4.751852821446244 -0.07331310085351057 4.1188212627480105
+  orientation -0.06222531655574573 0.9836882396683798 0.16877635236507976 0.717188296715101
+  position -0.725146893802487 0.018466111880543066 0.7042869146894328
   follow "TurtleBot3Burger"
   followType "Pan and Tilt Shot"
 }
@@ -25,38 +25,6 @@ TexturedBackgroundLight {
   texture "stadium"
   luminosity 2
   castShadows FALSE
-}
-TurtleBot3Burger {
-  hidden position_0_0 144.54580780522312
-  hidden position_0_1 144.57608939029836
-  hidden position_0_2 0.004955366069327969
-  hidden position2_0_2 -4.330426387493336e-05
-  hidden position3_0_2 8.316055626598903e-08
-  hidden linearVelocity_0 2.535994995389293e-09 -2.053694511853106e-07 -1.5421584306613192e-10
-  hidden angularVelocity_0 -3.4667641406458766e-09 6.286665014247793e-08 -8.590598225797228e-10
-  hidden position_2_0 2809.195520000059
-  hidden position_2_1 5438.392320000113
-  hidden rotation_3 0.9131005271153626 -0.2883113046003818 -0.2883123636288825 4.6216009861166585
-  hidden translation_4 -0.09000705476466273 -0.010000000000000004 0.013393249454108493
-  hidden rotation_4 -0.1046415972948151 -0.7032234719957741 -0.7032260550845642 2.933069113907013
-  hidden rotation_9 0 1 0 3.0968958082459217
-  hidden linearVelocity_9 1.455825498789637e-09 -2.0544989254083928e-07 -1.933856157580206e-09
-  hidden angularVelocity_9 9.335700837859156e-06 1.4998536258361679 -2.8413254979652786e-05
-  hidden rotation_10 0.5521470534309362 4.6330739369206663e-07 0.8337467429545501 3.141597213993613
-  hidden linearVelocity_10 1.7103842465984776e-09 -2.0544967280813855e-07 -2.4776164448915576e-09
-  hidden angularVelocity_10 9.337501835703874e-06 1.500144493858473 -2.8418758673435464e-05
-  hidden rotation_11 0.019589093578233144 0.9840934593951313 0.1765682037868262 3.347154488876631
-  hidden linearVelocity_11 -3.058334882237134e-10 -2.0548554098057605e-07 2.7901895304081905e-09
-  hidden angularVelocity_11 5.137138068145328e-05 -7.64583707737794e-08 -4.057783033990776e-13
-  translation 0.9655841635184848 -0.07253933198926833 0.15956442516580646
-  rotation -0.0014813414146113502 -0.9999987892727753 -0.00047652974391469883 0.012813723520179076
-  controller "toon_controller"
-  extensionSlot [
-    GPS {
-    }
-    RobotisLds01 {
-    }
-  ]
 }
 RectangleArena {
   translation 0 -0.180004 0.16
@@ -445,4 +413,35 @@ Wall {
       scale 2.4 1
     }
   }
+}
+TurtleBot3Burger {
+  hidden position_0_0 3.3455764824823035e-10
+  hidden position_0_1 9.863083320015193e-07
+  hidden position_0_2 281.5178278484427
+  hidden position2_0_2 -269.4550306521161
+  hidden position3_0_2 -41.32985149562899
+  hidden linearVelocity_0 -4.2766764589673356e-07 -1.4836622458341329e-06 1.306981482711546e-05
+  hidden angularVelocity_0 2.2374396032088928e-05 -6.461597668276425e-06 -7.910808886738283e-08
+  hidden rotation_9 0 1 0 1.9693769040417974
+  hidden linearVelocity_9 -6.487584201056707e-07 -2.051217761436181e-06 1.1307955094327374e-05
+  hidden angularVelocity_9 2.2374396053711863e-05 -6.461597696208775e-06 -7.910808818978455e-08
+  hidden rotation_10 -0.5531252843921005 2.2807415410842152e-06 0.8330980853182631 3.141593574876663
+  hidden linearVelocity_10 -6.328885331485367e-07 -2.4170413503583942e-06 1.4871189875704427e-05
+  hidden angularVelocity_10 2.2365069473190987e-05 -6.461545317341131e-06 -8.914640689129837e-08
+  hidden rotation_11 -0.556778919720038 0.08289572146766905 -0.8265140857346244 3.7013768133740896
+  hidden linearVelocity_11 -1.1535567549483257e-07 -4.113871602943693e-07 1.345264328295522e-05
+  hidden angularVelocity_11 0.9247858305436942 0.036384589980167005 1.9309955330941915e-07
+  translation -0.20627742389846312 0.08432207554718396 0.258293846310992
+  rotation 0.00179220499956347 -0.9999966669635212 0.0018585109867450182 1.5657144965936274
+  controller "my_controller"
+  controllerArgs [
+    ""
+  ]
+  extensionSlot [
+    GPS {
+      translation 0 0 -0.13
+    }
+    RobotisLds01 {
+    }
+  ]
 }
