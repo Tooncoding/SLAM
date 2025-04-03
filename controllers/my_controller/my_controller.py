@@ -1,6 +1,7 @@
 
 from controller import Robot,Motor,GPS,Supervisor,Camera,CameraRecognitionObject
 import random
+import numpy as np
 TOTAL_OBS = 6
 WIDTH = 8
 HEIGHT = 8
@@ -10,12 +11,18 @@ STARTING_Y = -1.05
 STARTING_Z = 0.2
 GRID_WIDTH = 0.2514
 GRID_HEIGHT = 0.2514
-
+MAX_SPEED = 4
+WHEEL_RADIUS = 0.033
+WHEEL_BASE = 0.18
 
 robot = Robot()
 supervisor = Supervisor()
 all_tiles = []
 color_dict = {}
+
+theta_integral = 0.0 
+distance_integral = 0.0
+v = 1.0   # Linear velocity (adjust as needed)
 
 def gen_tile_list():
    tile_list = []
@@ -39,11 +46,34 @@ gps.enable(timestep)
 
 camera = robot.getDevice("camera")
 camera.enable(timestep)
-# You should insert a getDevice-like function in order to get the
-# instance of a device of the robot. Something like:
+
+# Init motors
 left_motor = robot.getDevice('left wheel motor')
 right_motor = robot.getDevice('right wheel motor')
+left_motor.setPosition(float("inf"))
+right_motor.setPosition(float("inf"))
+left_motor.setVelocity(0)
+right_motor.setVelocity(0)
 
+def move_forward(coeff=1):
+    print("moving forward")
+    left_motor.setVelocity(coeff*MAX_SPEED)
+    right_motor.setVelocity(coeff*MAX_SPEED)
+
+def move_backward(coeff=1):
+    print("moving backward")
+    left_motor.setVelocity(-coeff*MAX_SPEED)
+    right_motor.setVelocity(-coeff*MAX_SPEED)
+
+def counter_clockwise_spin(coeff=0.5):
+    print("CCW spin")
+    left_motor.setVelocity(-coeff*MAX_SPEED)
+    right_motor.setVelocity(coeff*MAX_SPEED)
+
+def counter_clockwise_spin(coeff=0.5):
+    print("CW spin")
+    left_motor.setVelocity(coeff*MAX_SPEED)
+    right_motor.setVelocity(-coeff*MAX_SPEED)
 
 def gameover():
     gg_tiles = []
@@ -77,8 +107,6 @@ def spawn_boxes(obs_number):
     global all_tiles
     grid_xs = [a-((a//8)*8) for a in all_tiles[7:13]]
     grid_ys = [(a//8) for a in all_tiles[7:13]]
-    
-   
 
     for i in range(obs_number):
         pos_x = round((grid_xs[i])*GRID_WIDTH + STARTING_X, 4)
@@ -99,14 +127,6 @@ def spawn_box(id, position):
     translation_field.setSFVec3f(position)      
     
     
-
-def forward(speed):
-   left_motor.setPosition(float("inf"))
-   left_motor.setVelocity(speed)
-   right_motor.setPosition(float("inf"))
-   right_motor.setVelocity(speed)
-   #  ds = robot.getDevice('dsname')
-#  ds.enable(timestep)
 def col_match(color):
   col = 0
   if [253,236,253]<color<[253,240,253]: #[[253,236,253],[253,237,253],[253,238,253]]:
@@ -136,6 +156,7 @@ def col_match(color):
   else:
       col = 0
   return col
+
 def pixel_area(col,img):
     count = 0
     end = 0
@@ -246,6 +267,7 @@ while robot.step(timestep) != -1:
     print(str(red) +","+ str(green) +","+ str(blue)) 
     
     """
+    move_forward()
     img = camera.getImageArray()
     w = camera.getWidth()
     h = camera.getHeight() 
@@ -277,11 +299,6 @@ while robot.step(timestep) != -1:
        print("win")
        print("win")
        break
-     
-        
-       
-    
-     
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
