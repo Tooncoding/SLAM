@@ -2,6 +2,7 @@
 from controller import Robot,Motor,GPS,Supervisor,Camera,CameraRecognitionObject
 import random
 import numpy as np
+import time
 TOTAL_OBS = 6
 WIDTH = 8
 HEIGHT = 8
@@ -57,23 +58,55 @@ right_motor.setVelocity(0)
 
 def move_forward(coeff=1):
     print("moving forward")
-    left_motor.setVelocity(coeff*MAX_SPEED)
-    right_motor.setVelocity(coeff*MAX_SPEED)
+    count = 0
+    while robot.step(timestep) != -1:
+        if count > 30:
+            break
+        left_motor.setVelocity(coeff*MAX_SPEED)
+        right_motor.setVelocity(coeff*MAX_SPEED)
+        count += 1
+    print("stop")
+    left_motor.setVelocity(0)
+    right_motor.setVelocity(0)
 
 def move_backward(coeff=1):
     print("moving backward")
-    left_motor.setVelocity(-coeff*MAX_SPEED)
-    right_motor.setVelocity(-coeff*MAX_SPEED)
+    count = 0
+    while robot.step(timestep) != -1:
+        if count > 30:
+            break
+        left_motor.setVelocity(-coeff*MAX_SPEED)
+        right_motor.setVelocity(-coeff*MAX_SPEED)
+        count += 1
+    print("stop")
+    left_motor.setVelocity(0)
+    right_motor.setVelocity(0)
 
 def counter_clockwise_spin(coeff=0.5):
     print("CCW spin")
-    left_motor.setVelocity(-coeff*MAX_SPEED)
-    right_motor.setVelocity(coeff*MAX_SPEED)
+    count = 0
+    while robot.step(timestep) != -1:
+        if count > 32:
+            break
+        left_motor.setVelocity(-coeff*MAX_SPEED)
+        right_motor.setVelocity(coeff*MAX_SPEED)
+        count += 1
+    print("stop")
+    left_motor.setVelocity(0)
+    right_motor.setVelocity(0)
 
-def counter_clockwise_spin(coeff=0.5):
+def clockwise_spin(coeff=0.5):
     print("CW spin")
-    left_motor.setVelocity(coeff*MAX_SPEED)
-    right_motor.setVelocity(-coeff*MAX_SPEED)
+    count = 0
+    while robot.step(timestep) != -1:
+        if count > 32:
+            break
+        left_motor.setVelocity(coeff*MAX_SPEED)
+        right_motor.setVelocity(-coeff*MAX_SPEED)
+        count += 1
+    print("stop")
+    left_motor.setVelocity(0)
+    right_motor.setVelocity(0)
 
 def gameover():
     gg_tiles = []
@@ -247,6 +280,13 @@ spawn_boxes(TOTAL_OBS)
 #move this line to the main loop in the real game
 current_pos = gps.getValues()
 
+move_forward()
+clockwise_spin()
+move_forward()
+clockwise_spin()
+move_forward()
+clockwise_spin()
+move_forward()
     
 while robot.step(timestep) != -1:
    
@@ -267,7 +307,6 @@ while robot.step(timestep) != -1:
     print(str(red) +","+ str(green) +","+ str(blue)) 
     
     """
-    move_forward()
     img = camera.getImageArray()
     w = camera.getWidth()
     h = camera.getHeight() 
