@@ -3,6 +3,8 @@ from controller import Robot,Motor,GPS,Supervisor,Camera,CameraRecognitionObject
 import random
 import numpy as np
 import time
+from control_tools import ControlTools
+
 TOTAL_OBS = 6
 WIDTH = 8
 HEIGHT = 8
@@ -56,57 +58,8 @@ right_motor.setPosition(float("inf"))
 left_motor.setVelocity(0)
 right_motor.setVelocity(0)
 
-def move_forward(coeff=1):
-    print("moving forward")
-    count = 0
-    while robot.step(timestep) != -1:
-        if count > 30:
-            break
-        left_motor.setVelocity(coeff*MAX_SPEED)
-        right_motor.setVelocity(coeff*MAX_SPEED)
-        count += 1
-    print("stop")
-    left_motor.setVelocity(0)
-    right_motor.setVelocity(0)
-
-def move_backward(coeff=1):
-    print("moving backward")
-    count = 0
-    while robot.step(timestep) != -1:
-        if count > 30:
-            break
-        left_motor.setVelocity(-coeff*MAX_SPEED)
-        right_motor.setVelocity(-coeff*MAX_SPEED)
-        count += 1
-    print("stop")
-    left_motor.setVelocity(0)
-    right_motor.setVelocity(0)
-
-def counter_clockwise_spin(coeff=0.5):
-    print("CCW spin")
-    count = 0
-    while robot.step(timestep) != -1:
-        if count > 32:
-            break
-        left_motor.setVelocity(-coeff*MAX_SPEED)
-        right_motor.setVelocity(coeff*MAX_SPEED)
-        count += 1
-    print("stop")
-    left_motor.setVelocity(0)
-    right_motor.setVelocity(0)
-
-def clockwise_spin(coeff=0.5):
-    print("CW spin")
-    count = 0
-    while robot.step(timestep) != -1:
-        if count > 32:
-            break
-        left_motor.setVelocity(coeff*MAX_SPEED)
-        right_motor.setVelocity(-coeff*MAX_SPEED)
-        count += 1
-    print("stop")
-    left_motor.setVelocity(0)
-    right_motor.setVelocity(0)
+# Init motor controller
+controller = ControlTools(robot, left_motor, right_motor)
 
 def gameover():
     gg_tiles = []
@@ -280,13 +233,13 @@ spawn_boxes(TOTAL_OBS)
 #move this line to the main loop in the real game
 current_pos = gps.getValues()
 
-move_forward()
-clockwise_spin()
-move_forward()
-clockwise_spin()
-move_forward()
-clockwise_spin()
-move_forward()
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
     
 while robot.step(timestep) != -1:
    
