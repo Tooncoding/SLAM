@@ -1,6 +1,13 @@
 
 from controller import Robot,Motor,GPS,Supervisor,Camera,CameraRecognitionObject
 import random
+<<<<<<< HEAD
+=======
+import numpy as np
+import time
+from control_tools import ControlTools
+
+>>>>>>> origin/main
 TOTAL_OBS = 6
 WIDTH = 8
 HEIGHT = 8
@@ -10,13 +17,26 @@ STARTING_Y = -1.05
 STARTING_Z = 0.2
 GRID_WIDTH = 0.2514
 GRID_HEIGHT = 0.2514
+<<<<<<< HEAD
 
+=======
+MAX_SPEED = 4
+WHEEL_RADIUS = 0.033
+WHEEL_BASE = 0.18
+>>>>>>> origin/main
 
 robot = Robot()
 supervisor = Supervisor()
 all_tiles = []
 color_dict = {}
 
+<<<<<<< HEAD
+=======
+theta_integral = 0.0 
+distance_integral = 0.0
+v = 1.0   # Linear velocity (adjust as needed)
+
+>>>>>>> origin/main
 def gen_tile_list():
    tile_list = []
    for y1 in range(-100,100,25):
@@ -39,10 +59,22 @@ gps.enable(timestep)
 
 camera = robot.getDevice("camera")
 camera.enable(timestep)
+<<<<<<< HEAD
 # You should insert a getDevice-like function in order to get the
 # instance of a device of the robot. Something like:
+=======
+
+# Init motors
+>>>>>>> origin/main
 left_motor = robot.getDevice('left wheel motor')
 right_motor = robot.getDevice('right wheel motor')
+left_motor.setPosition(float("inf"))
+right_motor.setPosition(float("inf"))
+left_motor.setVelocity(0)
+right_motor.setVelocity(0)
+
+# Init motor controller
+controller = ControlTools(robot, left_motor, right_motor)
 
 
 def gameover():
@@ -77,8 +109,11 @@ def spawn_boxes(obs_number):
     global all_tiles
     grid_xs = [a-((a//8)*8) for a in all_tiles[7:13]]
     grid_ys = [(a//8) for a in all_tiles[7:13]]
+<<<<<<< HEAD
     
    
+=======
+>>>>>>> origin/main
 
     for i in range(obs_number):
         pos_x = round((grid_xs[i])*GRID_WIDTH + STARTING_X, 4)
@@ -88,6 +123,7 @@ def spawn_boxes(obs_number):
         position = [pos_x, pos_y, pos_z]
         spawn_box(id, position)
         
+<<<<<<< HEAD
 
 def spawn_box(id, position):
     root = supervisor.getRoot()
@@ -107,6 +143,19 @@ def forward(speed):
    right_motor.setVelocity(speed)
    #  ds = robot.getDevice('dsname')
 #  ds.enable(timestep)
+=======
+
+def spawn_box(id, position):
+    root = supervisor.getRoot()
+    children_field = root.getField('children')
+    box_string = f'Solid {{children [ Shape {{ appearance PBRAppearance {{ baseColor 0 0 0 }} geometry Box {{ size 0.2 0.2 0.1 }} }} ] name "{id}"}}'
+    children_field.importMFNodeFromString(-1, box_string)
+    new_node = children_field.getMFNode(-1)
+    translation_field = new_node.getField('translation')
+    translation_field.setSFVec3f(position)      
+    
+    
+>>>>>>> origin/main
 def col_match(color):
   col = 0
   if [253,236,253]<color<[253,240,253]: #[[253,236,253],[253,237,253],[253,238,253]]:
@@ -136,6 +185,10 @@ def col_match(color):
   else:
       col = 0
   return col
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 def pixel_area(col,img):
     count = 0
     end = 0
@@ -209,9 +262,15 @@ def row_match(count):
                    
                                                 
 random_tiles()
+<<<<<<< HEAD
 
 lose = gameover()
 
+=======
+
+lose = gameover()
+
+>>>>>>> origin/main
 win = win()
 
 spawn_boxes(TOTAL_OBS) 
@@ -226,6 +285,16 @@ spawn_boxes(TOTAL_OBS)
 #move this line to the main loop in the real game
 current_pos = gps.getValues()
 
+<<<<<<< HEAD
+=======
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
+controller.clockwise_spin()
+controller.move_forward()
+>>>>>>> origin/main
     
 while robot.step(timestep) != -1:
    
@@ -277,11 +346,14 @@ while robot.step(timestep) != -1:
        print("win")
        print("win")
        break
+<<<<<<< HEAD
      
         
        
     
      
+=======
+>>>>>>> origin/main
 
     # Read the sensors:
     # Enter here functions to read sensor data, like:
