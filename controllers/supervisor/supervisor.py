@@ -1,5 +1,12 @@
+"""
 from controller import Supervisor
+
+# importing sys
+import sys
 import random
+# adding Folder_2 to the system path
+sys.path.insert(0, r'C:\Users\Admin\OneDrive - Chulalongkorn University\Documents\turtlebot\SLAM\controllers\my_controller')
+from my_controller import export  
 
 TOTAL_OBS = 6
 WIDTH = 8
@@ -15,9 +22,10 @@ supervisor = Supervisor()
 
 time_step = int(supervisor.getBasicTimeStep())
 
+block = export()[8:14]
 def spawn_boxes(obs_number):
-    grid_xs = random.sample(range(WIDTH), obs_number)
-    grid_ys = random.sample(range(HEIGHT), obs_number)
+    grid_xs = [a-(round(a/8)*8) for a in block]
+    grid_ys = [round(a/8) for a in block]
     for i in range(obs_number):
         pos_x = round((grid_xs[i])*GRID_WIDTH + STARTING_X, 4)
         pos_y = round((grid_ys[i])*GRID_HEIGHT + STARTING_Y, 4)
@@ -40,7 +48,7 @@ def spawn_box(id, position):
     # Main loop
 while supervisor.step(time_step) != -1:
     # Example: Spawn a box at position (1, 0, 1) after 5 seconds
+    print(gen_tile_list())
     if supervisor.getTime() > 2.0:
         spawn_boxes(TOTAL_OBS)   
-        
-        break
+              break"""
