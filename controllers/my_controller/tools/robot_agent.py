@@ -1,6 +1,6 @@
 MAX_SPEED = 4
 
-class ControlTools:
+class RobotAgent:
     def __init__(self, robot, left_motor, right_motor):
         self.robot = robot
         self.timestep = int(robot.getBasicTimeStep())
