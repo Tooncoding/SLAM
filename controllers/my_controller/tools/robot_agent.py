@@ -8,6 +8,19 @@ class RobotAgent:
         self.right_motor = right_motor
         self.max_speed = MAX_SPEED
 
+    def execute(self, command):
+        if command == "FORWARD":
+            self.move_forward()
+        elif command == "AVOID":
+            self.move_backward()
+            self.counter_clockwise_spin()
+            self.move_forward()
+        elif command == "SPIN_LEFT":
+            self.counter_clockwise_spin()
+            self.move_forward()
+        else:
+            print("⚠️ Unknown command:", command)            
+
     def move_forward(self, coeff=1):
         print("moving forward")
         count = 0
