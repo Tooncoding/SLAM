@@ -10,14 +10,14 @@ class VisionProcessor:
             3: ([222, 253, 253], [225, 255, 255]),
             4: ([238, 255, 250], [243, 255, 250]),
             5: ([253, 250, 0],   [253, 255, 255]),
-            6: ([231, 120, 120], [233, 255, 255]),
-            7: ([253, 170, 200], [253, 200, 255]),
+            6: ([230, 120, 120], [233, 255, 255]),  # fixed from 231 to 230 to match ori
+            7: ([253, 170, 200], [253, 300, 255]),  # fixed upper bound to match ori
             8: ([213, 195, 200], [220, 199, 202])
         }
 
     def match_color(self, rgb):
         for label, (low, high) in self.color_ranges.items():
-            if all(low[i] < rgb[i] < high[i] for i in range(3)):
+            if all(low[i] <= rgb[i] <= high[i] for i in range(3)):
                 return label
         return 0
 
@@ -28,7 +28,7 @@ class VisionProcessor:
         image = self.camera.getImageArray()
         return sum(
             1 for row in image for px in row
-            if all(low[i] < px[i] < high[i] for i in range(3))
+            if all(low[i] <= px[i] <= high[i] for i in range(3))
         )
 
     def get_center_pixel_color(self):

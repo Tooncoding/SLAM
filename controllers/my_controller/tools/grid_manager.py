@@ -15,10 +15,15 @@ class GridManager:
 
     def _generate_tile_list(self):
         tile_list = []
-        for y1 in range(-120, 100, 25):
-            for x1 in range(-100, 100, 25):
-                tile_list.append([[x1 / 100, x1 / 100 + 0.25], [y1 / 100, y1 / 100 + 0.25]])
+        for y in range(-120, 100, 25):
+            for x in range(-100, 100, 25):
+                x_min = x / 100
+                x_max = x_min + 0.25
+                y_min = y / 100
+                y_max = y_min + 0.25
+                tile_list.append([[x_min, x_max], [y_min, y_max]])
         return tile_list
+
 
     def locate(self, pos):
         for idx, tile in enumerate(self.tiles):
@@ -49,3 +54,18 @@ class GridManager:
     def print_map(self):
         for row in reversed(self.map):
             print(*row)
+
+    def mark_batch(self, indices, symbol):
+        for idx in indices:
+            self.mark_tile(idx, symbol)
+
+    def get_region_bounds(self, indices):
+        return [self.get_tile_bounds(i) for i in indices]
+
+    def get_tile_center(self, index):
+        tile = self.get_tile_bounds(index)
+        if tile:
+            x = (tile[0][0] + tile[0][1]) / 2
+            y = (tile[1][0] + tile[1][1]) / 2
+            return [x, y]
+        return None
