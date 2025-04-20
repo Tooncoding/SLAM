@@ -51,4 +51,5 @@ while supervisor.step(time_step) != -1:
     print(gen_tile_list())
     if supervisor.getTime() > 2.0:
         spawn_boxes(TOTAL_OBS)   
-              break"""
+              break
+"""
