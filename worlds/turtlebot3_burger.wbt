@@ -137,10 +137,6 @@ Wall {
     }
   }
 }
-Robot {
-  controller "supervisor"
-  supervisor TRUE
-}
 Wall {
   translation -0.6 0.91 0.14
   rotation 1.35619e-08 9.7542e-17 -1 -1.5707953071795862
@@ -417,15 +413,25 @@ Wall {
     }
   }
 }
+<<<<<<< HEAD
 TurtleBot3Burger {
+=======
+DEF TurtleBot3Burger TurtleBot3Burger {
+>>>>>>> c953c778ce8a4e89a3fbd2b203f7615dc4a1feaf
   hidden position_0_0 5.148253372650363e-11
   hidden position_0_1 2.1999400531265477e-13
   hidden position_0_2 -12.421826563656724
   hidden position2_0_2 -49.43337360184942
   hidden position3_0_2 -0.7726081596848831
+<<<<<<< HEAD
   hidden rotation_10 0 -1 0 1.5707959935596927
   hidden rotation_11 -0.7071047801265659 -3.480681172106049e-15 -0.7071087822408665 3.141588
   hidden rotation_12 0.30006128746946437 -0.8648624235933879 -0.4024626840072736 2.1159813655167508
+=======
+  hidden rotation_10 0 -1 0 1.57079599350821
+  hidden rotation_11 -0.7071047801266437 -3.4804252316416267e-15 -0.7071087822407887 3.141588
+  hidden rotation_12 0.3000612874694643 -0.8648624235933879 -0.4024626840072737 2.1159813655167508
+>>>>>>> c953c778ce8a4e89a3fbd2b203f7615dc4a1feaf
   translation -0.1 0.2 0.159508
   rotation -0.0041677521590523375 0.24520812702703035 -0.9694615022175127 0
   controller "my_controller"

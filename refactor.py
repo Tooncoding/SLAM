@@ -1,6 +1,7 @@
-<<<<<<< HEAD
 from controller import Robot,Motor,GPS,Supervisor,Camera,CameraRecognitionObject
 import random
+from tools import RobotAgent, VisionProcessor, GridManager
+
 TOTAL_OBS = 6
 WIDTH = 8
 HEIGHT = 8
@@ -11,24 +12,13 @@ STARTING_Z = 0.2
 GRID_WIDTH = 0.2514
 GRID_HEIGHT = 0.2514
 
-=======
-# main_controller.py
 
-from controller import Robot, Supervisor
-from tools import RobotAgent, VisionProcessor, GridManager, GameController, risk_utils
-import random
-
-# Constants
-TOTAL_OBS = 6
-WIDTH, HEIGHT = 8, 8
-STARTING_X, STARTING_Y, STARTING_Z = -0.88, -1.05, 0.2
-GRID_WIDTH, GRID_HEIGHT = 0.2514, 0.2514
->>>>>>> c953c778ce8a4e89a3fbd2b203f7615dc4a1feaf
-
-# Initialization
 robot = Robot()
 supervisor = Supervisor()
-<<<<<<< HEAD
+vision = VisionProcessor(robot)
+agent = RobotAgent(robot)
+grid =  GridManager(width=8, height=8, start_x=-0.88, start_y=-1.05, tile_w=0.2514, tile_h=0.2514)
+
 all_tiles = []
 color_dict = {}
 map = [[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0]]
@@ -108,6 +98,7 @@ chance[61][2] = True
 chance[62][2] = True
 print(risk)
 print(chance)
+
 for obs in all_tiles[7:13]:
     if obs not in [0,1,2,3,4,5,6,7,8,16,24,32,40,48,56,15,23,31,39,47,55,57,58,59,60,61,62,63]:
         risk[obs+1][0] = True #left
@@ -168,6 +159,7 @@ for obs in all_tiles[7:13]:
         chance[obs-1][1] = True #right
         chance[obs+1][0] = True #left 
         chance[obs-8][2] = True #up 
+
 #generate the tile range scope list in meter
 def gen_tile_list():
    tile_list = []
@@ -190,6 +182,7 @@ def locate_grid(pos):
             return count
         count += 1
 #build the 8x8 map with tracking the movement of the robot    
+
 def build_map(cur_pos):
     global map
     print("Global Map is", map)
@@ -292,109 +285,6 @@ def forward(speed):
    #  ds = robot.getDevice('dsname')
 #  ds.enable(timestep)
 
-#pixel match function, still not accurate
-def col_match(color):
-  col = 0
-  if [253,236,253]<color<[253,240,253]: #[[253,236,253],[253,237,253],[253,238,253]]:
-      #print("col1")
-      col = 1
-  elif [226,0,0]<color<[228,255,255]:  #[[226,226,253],[226,227,253],[227,227,253]]:
-      #print("col2")
-      col = 2
-  elif [222,253,253]<color <[225,255,255]:#[[223,253,253],[224,253,253],[225,253,253]]:
-      #print("col3")
-      col = 3
-  elif [238,255,250]<color< [243,255,250]:#[[240,255,250],[241,255,250],[242,255,250]]:
-      #print("col4")
-      col = 4
-  elif [253,250,0]<color< [253,255,255]:#[[253,252,215],[253,252,216],[253,252,217]]:
-      #print("col5")
-      col = 5
-  elif [230,120,120]<color< [233,255,255]: #[[232,170,153],[232,171,153],[232,172,153]]:
-      #print("col6")
-      col = 6
-  elif [253,170,200]<color< [253,300,255]:#[[253,194,202],[253,195,202],[253,196,202]]:
-      #print("col7")
-      col = 7
-  elif [213,195,200]<color< [220,199,202]:#[[214,198,200],[214,199,200],[214,200,200]]:
-      #print("col8")
-      col = 8
-  else:
-      col = 0
-  return col
-#pixel area calculation , still not good
-def pixel_area(col,img):
-    count = 0
-    end = 0
-    if col == 1:
-        for j in range(0,256):
-            for i in range(0,256):
-                if  [253,236,253]<img[i][j] <[253,240,253]: 
-                    count += 1    
-        return count   
-    if col == 2:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [226,0,0]<img[i][j]<[228,255,255]:
-                    count += 1
-       return count   
-    if col == 3:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [222,253,253]<img[i][j] <[225,253,253]:
-                    count += 1
-       return count
-    if col == 4:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [238,255,250]<img[i][j] < [243,255,250]:
-                    count += 1
-       return count   
-    if col == 5:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [253,250,0]<img[i][j]< [253,255,255]:
-                    count += 1
-       return count   
-    if col == 6:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [231,120,120]<img[i][j]< [233,255,255]:
-                    count += 1
-       return count
-    if col == 7:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [253,170,200]<img[i][j]< [253,200,255]:
-                    count += 1
-       return count   
-    if col == 8:
-       for j in range(0,256):
-            for i in range(0,256):
-                if [213,195,200]<img[i][j]< [220,199,202]:
-                    count += 1
-       return count 
-    else:
-        return count  
-#row estimation function , still noot accurate
-def row_match(count):
-    if count > 38000:
-        return "row1"
-    elif 20000<count < 38000:
-        return "row2"
-    elif 10000<count < 20000:
-        return "row3"
-    elif 7000<count < 10000:
-        return "row4"
-    elif 4000<count <7000:
-        return "row5"
-    elif 2700<count < 4000:
-        return "row6"
-    elif 2000<count < 2700:
-        return "row7"
-    elif 0<=count < 2000:
-        return "row8"    
-#update the risk for every movement
 def update_risk(current,stat):
     global risk
     grid_id = locate_grid(current_pos)
@@ -470,59 +360,11 @@ def update_risk(current,stat):
            chance[grid_id-8][2] = True #up                
                                                 
 random_tiles()
-=======
-vision = VisionProcessor(robot)
-left_motor = robot.getDevice('left wheel motor')
-right_motor = robot.getDevice('right wheel motor')
-left_motor.setPosition(float("inf"))
-right_motor.setPosition(float("inf"))
-left_motor.setVelocity(0)
-right_motor.setVelocity(0)
 
-agent = RobotAgent(robot, left_motor, right_motor)
-grid = GridManager(WIDTH, HEIGHT, STARTING_X, STARTING_Y, GRID_WIDTH, GRID_HEIGHT)
+lose = gameover()
 
-# Randomly generate tile indices
-all_tiles = random.sample(range(64), 14)
-risk = [[False] * 4 for _ in range(64)]
-chance = [[False] * 4 for _ in range(64)]
+win = win()
 
-# Mark obstacle tiles on the map
-grid.mark_batch(all_tiles[7:13], "B")
-
-# Define game logic helpers
-def spawn_robot():
-    robo_node = supervisor.getFromDef('TurtleBot3Burger')
-    center = grid.get_tile_center(all_tiles[13])
-    if center:
-        robo_node.getField('translation').setSFVec3f([center[0], center[1], 0.159505])
-
-def spawn_obstacles():
-    root = supervisor.getRoot()
-    children_field = root.getField('children')
-    for i, idx in enumerate(all_tiles[7:13]):
-        pos = grid.get_tile_center(idx)
-        if pos:
-            pos_x = round(pos[0], 4)
-            pos_y = round(pos[1], 4)
-            pos_z = STARTING_Z
-            box_string = f'Solid {{children [ Shape {{ appearance PBRAppearance {{ baseColor 0 0 0 }} geometry Box {{ size 0.2 0.2 0.1 }} }} ] name "Obstacle {i}"}}'
-            children_field.importMFNodeFromString(-1, box_string)
-            children_field.getMFNode(-1).getField('translation').setSFVec3f([pos_x, pos_y, pos_z])
->>>>>>> c953c778ce8a4e89a3fbd2b203f7615dc4a1feaf
-
-# Setup devices
-timestep = int(robot.getBasicTimeStep())
-gps = robot.getDevice("gps")
-gps.enable(timestep)
-camera = robot.getDevice("camera")
-camera.enable(timestep)
-
-# Spawn world elements
-spawn_robot()
-spawn_obstacles()
-
-<<<<<<< HEAD
 spawn_boxes(TOTAL_OBS) 
 
 for num in all_tiles[7:13]:
@@ -571,7 +413,7 @@ while robot.step(timestep) != -1:
     #break
     #print(str(red) +","+ str(green) +","+ str(blue)) 
     #c = column
-    c = col_match(color)
+    c = vision.match_color(color)
     con = lose[0]
     if ((con[0][0][0]<=current_pos[0]<=con[0][0][1] and con[0][1][0]<=current_pos[1]<=con[0][1][1])
     or (con[1][0][0]<=current_pos[0]<=con[1][0][1] and con[1][1][0]<=current_pos[1]<=con[1][1][1])
@@ -628,14 +470,3 @@ while robot.step(timestep) != -1:
 
 
 # Enter here exit cleanup code.
-=======
-# Launch game controller
-controller = GameController(grid, vision, agent, all_tiles, risk_utils.update_risk, risk, chance, camera)
-
-# Main loop
-while robot.step(timestep) != -1:
-    current_pos = gps.getValues()
-    result = controller.step(current_pos)
-    if result in ["win", "lose"]:
-        break
->>>>>>> c953c778ce8a4e89a3fbd2b203f7615dc4a1feaf
