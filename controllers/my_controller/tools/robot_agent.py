@@ -9,23 +9,28 @@ class RobotAgent:
         self.max_speed = MAX_SPEED
 
     def execute(self, command):
-        if command == "FORWARD":
+        print("Executing command:", command)
+
+        if command == "F":
             self.move_forward()
+        elif command == "B":
+            self.move_backward()
+        elif command == "L":
+            self.move_left()  # ← you must implement this
+        elif command == "R":
+            self.move_right()  # ← you must implement this
         elif command == "AVOID":
             self.move_backward()
             self.counter_clockwise_spin()
             self.move_forward()
-        elif command == "SPIN_LEFT":
-            self.counter_clockwise_spin()
-            self.move_forward()
         else:
-            print("⚠️ Unknown command:", command)            
-
+            print("⚠️ Unknown command:", command)
+       
     def move_forward(self, coeff=1):
         print("moving forward")
         count = 0
         while self.robot.step(self.timestep) != -1:
-            if count > 30:
+            if count > 29:
                 break
             self.left_motor.setVelocity(coeff*self.max_speed)
             self.right_motor.setVelocity(coeff*self.max_speed)
@@ -38,7 +43,7 @@ class RobotAgent:
         print("moving backward")
         count = 0
         while self.robot.step(self.timestep) != -1:
-            if count > 30:
+            if count > 29:
                 break
             self.left_motor.setVelocity(-coeff*self.max_speed)
             self.right_motor.setVelocity(-coeff*self.max_speed)
@@ -72,3 +77,14 @@ class RobotAgent:
         print("stop")
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
+
+    def move_left(self):
+    # move left one tile worth of time
+        self.counter_clockwise_spin()
+        self.move_forward()
+        self.clockwise_spin()
+
+    def move_right(self):
+        self.clockwise_spin()
+        self.move_forward()
+        self.counter_clockwise_spin()
