@@ -30,21 +30,21 @@ class GameController:
             print("win")
             return "win"
         return "ongoing"
-
+    
     def decide_next_move(self, pos):
         self.grid.robot_position = pos  # attach for compute_value_map
-        self.value_map = compute_value_map(
+        self.value_map, self.reward_map = compute_value_map(
             grid=self.grid,
             game_status=self.game_status,
-            risk=self.risk
         )
         self.next_move = decide_next_move(
             grid=self.grid,
-            risk=self.risk,
             chance=self.chance,
             pos=pos,
-            value_map=self.value_map
+            value_map=self.value_map,
+            reward=self.reward_map
         )
+
 
     def execute_move(self):
         command = self.next_move
