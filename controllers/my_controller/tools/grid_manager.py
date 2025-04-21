@@ -10,7 +10,7 @@ class GridManager:
         self.tile_h = tile_h
         self.total_tiles = width * height
 
-        self.map = [[0 for _ in range(width)] for _ in range(height)]
+        self.map = [['0' for _ in range(width)] for _ in range(height)]
         self.tiles = self._generate_tile_list()
 
     def _generate_tile_list(self):
@@ -24,10 +24,17 @@ class GridManager:
                 tile_list.append([[x_min, x_max], [y_min, y_max]])
         return tile_list
 
-
     def locate(self, pos):
         for idx, tile in enumerate(self.tiles):
-            if tile[0][0] <= pos[0] <= tile[0][1] and tile[1][0] <= pos[1] <= tile[1][1]:
+            x_min, x_max = tile[0]
+            y_min, y_max = tile[1]
+
+            # Flip X: mirror horizontally
+            flipped_x_min = -x_max
+            flipped_x_max = -x_min
+
+            # Y flip: keep tile bounds but invert coordinate check
+            if flipped_x_min <= -pos[0] <= flipped_x_max and y_min <= pos[1] <= y_max:
                 return idx
         return None
 
@@ -49,7 +56,7 @@ class GridManager:
         for y in range(self.height):
             for x in range(self.width):
                 if self.map[y][x] == "R":
-                    self.map[y][x] = 1
+                    self.map[y][x] = '1'
 
     def print_map(self):
         for row in reversed(self.map):

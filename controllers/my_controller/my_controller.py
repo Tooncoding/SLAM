@@ -72,3 +72,5 @@ while robot.step(timestep) != -1:
     result = controller.step(current_pos)
     if result in ["win", "lose"]:
         break
+
+print("yayy")

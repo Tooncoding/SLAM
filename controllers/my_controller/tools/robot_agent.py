@@ -12,14 +12,19 @@ class RobotAgent:
         print("Executing command:", command)
 
         if command == "F":
-            self.move_forward()
+            print("moving up")
+            self.move_left()
         elif command == "B":
-            self.move_backward()
+            print("moving down")
+            self.move_right()
         elif command == "L":
-            self.move_left()  # ← you must implement this
+            print("moving left")
+            self.move_backward()  # ← you must implement this
         elif command == "R":
-            self.move_right()  # ← you must implement this
+            print("moving right")
+            self.move_forward()  # ← you must implement this
         elif command == "AVOID":
+            print("avoiding")
             self.move_backward()
             self.counter_clockwise_spin()
             self.move_forward()
@@ -27,7 +32,7 @@ class RobotAgent:
             print("⚠️ Unknown command:", command)
        
     def move_forward(self, coeff=1):
-        print("moving forward")
+        # print("moving forward")
         count = 0
         while self.robot.step(self.timestep) != -1:
             if count > 29:
@@ -35,12 +40,12 @@ class RobotAgent:
             self.left_motor.setVelocity(coeff*self.max_speed)
             self.right_motor.setVelocity(coeff*self.max_speed)
             count += 1
-        print("stop")
+        # print("stop")
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
 
     def move_backward(self, coeff=1):
-        print("moving backward")
+        # print("moving backward")
         count = 0
         while self.robot.step(self.timestep) != -1:
             if count > 29:
@@ -53,7 +58,7 @@ class RobotAgent:
         self.right_motor.setVelocity(0)
 
     def counter_clockwise_spin(self, coeff=0.5):
-        print("CCW spin")
+        # print("CCW spin")
         count = 0
         while self.robot.step(self.timestep) != -1:
             if count > 32:
@@ -61,12 +66,12 @@ class RobotAgent:
             self.left_motor.setVelocity(-coeff*self.max_speed)
             self.right_motor.setVelocity(coeff*self.max_speed)
             count += 1
-        print("stop")
+        # print("stop")
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
 
     def clockwise_spin(self, coeff=0.5):
-        print("CW spin")
+        # print("CW spin")
         count = 0
         while self.robot.step(self.timestep) != -1:
             if count > 32:
@@ -74,7 +79,7 @@ class RobotAgent:
             self.left_motor.setVelocity(coeff*self.max_speed)
             self.right_motor.setVelocity(-coeff*self.max_speed)
             count += 1
-        print("stop")
+        # print("stop")
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
 

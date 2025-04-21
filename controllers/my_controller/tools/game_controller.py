@@ -58,8 +58,8 @@ class GameController:
         delta = {
             "L": (-1, 0),  # move left on map
             "R": (1, 0),   # move right on map
-            "F": (0, -1),  # move up on map
-            "B": (0, 1)    # move down on map
+            "F": (0, 1),  # move up on map
+            "B": (0, -1)    # move down on map
         }
 
         if command in delta:
