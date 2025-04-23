@@ -59,7 +59,6 @@ class GridManager:
         ]
 
         for nx, ny in neighbors:
-            print("yay")
             if 0 <= nx < self.width and 0 <= ny < self.height:
                 current = self.map[ny][nx]
                 if current == '0':  # Only mark unvisited tiles

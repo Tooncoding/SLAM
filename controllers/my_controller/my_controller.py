@@ -73,4 +73,4 @@ while robot.step(timestep) != -1:
     if result in ["win", "lose"]:
         break
 
-print("yayy")
+print("Game Ended")

@@ -1,7 +1,7 @@
 def compute_value_map(grid, game_status, phi=0.6, iterations=20):
     WIDTH = 8
     value_map = [0.0] * (WIDTH * WIDTH)
-    reward = [-1.0] * (WIDTH * WIDTH)
+    reward = [1.0] * (WIDTH * WIDTH)
 
     for i in range(WIDTH * WIDTH):
         tile = grid.map[i // WIDTH][i % WIDTH]
@@ -100,5 +100,4 @@ def extract_policy(grid, value_map, reward, gamma=0.9):
                         best_dir = direction
 
         policy_map[s] = best_dir if best_dir else "NONE"
-    print(policy_map)
     return policy_map
