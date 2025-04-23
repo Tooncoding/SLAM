@@ -1,4 +1,4 @@
-def compute_value_map(grid, game_status, phi=0.9, iterations=100):
+def compute_value_map(grid, game_status, phi=0.6, iterations=20):
     WIDTH = 8
     value_map = [0.0] * (WIDTH * WIDTH)
     reward = [-1.0] * (WIDTH * WIDTH)
@@ -8,15 +8,15 @@ def compute_value_map(grid, game_status, phi=0.9, iterations=100):
         if tile == 'B':
             reward[i] = -100.0
         elif tile == 'W':
-            reward[i] = 10.0
+            reward[i] = 100.0
         elif tile == 'L':
             reward[i] = -50.0
         elif tile == '1':
-            reward[i] = -30.0
+            reward[i] = -5.0
         elif tile == 'C':
-            reward[i] = 30.0
+            reward[i] = 80.0
         elif tile == 'D':
-            reward[i] = -30.0
+            reward[i] = -80.0
 
     index = grid.locate(grid.robot_position)
 
