@@ -84,6 +84,13 @@ class GameController:
     def step(self, pos):
         index = self.grid.locate(pos)
 
+        # Map update and printing if tile changed
+        if index != self.previous_index:
+            self.grid.update_robot_position(pos)
+            self.grid.print_map()
+            self.previous_index = index
+            print(self.game_status)
+
         # Perception
         self.camera.saveImage("test.jpg", 100)
         color = self.vision.get_center_pixel_color()
@@ -110,13 +117,6 @@ class GameController:
         # Value-based decision and action
         self.decide_next_move(pos)
         self.execute_move()
-
-        # Map update and printing if tile changed
-        if index != self.previous_index:
-            self.grid.update_robot_position(pos)
-            self.grid.print_map()
-            self.previous_index = index
-            print(self.game_status)
 
         # Mark L and W zones based on learned state
         for i, state in enumerate(self.risk):
