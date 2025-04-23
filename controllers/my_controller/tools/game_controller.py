@@ -84,13 +84,6 @@ class GameController:
     def step(self, pos):
         index = self.grid.locate(pos)
 
-        # Map update and printing if tile changed
-        if index != self.previous_index:
-            self.grid.update_robot_position(pos, self.game_status)
-            self.grid.print_map()
-            self.previous_index = index
-            print(self.game_status)
-
         # Perception
         self.camera.saveImage("test.jpg", 100)
         color = self.vision.get_center_pixel_color()
@@ -111,6 +104,13 @@ class GameController:
         else:
             self.game_status = "Still Safe"
 
+        # Map update and printing if tile changed
+        if index != self.previous_index:
+            self.grid.update_robot_position(pos, self.game_status)
+            self.grid.print_map()
+            self.previous_index = index
+            print(self.game_status)
+            
         # Risk update (pass `st`)
         self.update_risk(pos, st, self.grid, self.risk, self.chance)
 
