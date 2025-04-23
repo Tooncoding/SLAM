@@ -41,12 +41,33 @@ class GridManager:
     def get_tile_bounds(self, index):
         return self.tiles[index] if 0 <= index < self.total_tiles else None
 
-    def update_robot_position(self, pos):
+    def update_robot_position(self, pos, game_status):
         grid = self.locate(pos)
         if grid is None:
             return
+
         self._clear_previous_robot()
-        self.map[grid // self.width][grid % self.width] = "R"
+
+        x = grid % self.width
+        y = grid // self.width
+        self.map[y][x] = "R"
+
+        # Check and mark neighboring tiles based on game status
+        neighbors = [
+            (x - 1, y), (x + 1, y),
+            (x, y - 1), (x, y + 1)
+        ]
+
+        for nx, ny in neighbors:
+            print("yay")
+            if 0 <= nx < self.width and 0 <= ny < self.height:
+                current = self.map[ny][nx]
+                if current == '0':  # Only mark unvisited tiles
+                    if game_status == "Danger!":
+                        self.map[ny][nx] = "D"
+                    elif game_status == "Lucky Enough!":
+                        self.map[ny][nx] = "C"
+
 
     def mark_tile(self, index, symbol):
         if 0 <= index < self.total_tiles:

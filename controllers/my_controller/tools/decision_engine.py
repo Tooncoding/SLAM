@@ -10,27 +10,15 @@ def compute_value_map(grid, game_status, phi=0.9, iterations=100):
         elif tile == 'W':
             reward[i] = 10.0
         elif tile == 'L':
-            reward[i] = -30.0
+            reward[i] = -50.0
         elif tile == '1':
+            reward[i] = -30.0
+        elif tile == 'C':
+            reward[i] = 30.0
+        elif tile == 'D':
             reward[i] = -30.0
 
     index = grid.locate(grid.robot_position)
-
-    if index is not None:
-        x = index % 8
-        y = index // 8
-        neighbors = [
-            (x - 1, y), (x + 1, y),
-            (x, y - 1), (x, y + 1)
-        ]
-        for nx, ny in neighbors:
-            if 0 <= nx < 8 and 0 <= ny < 8:
-                n_index = ny * 8 + nx
-                if game_status == "Lucky Enough!":
-                    reward[n_index] += 40.0
-                elif game_status == "Danger!":
-                    reward[n_index] -= 50.0
-                    grid.mark_tile(n_index, "L")
 
     for _ in range(iterations):
         new_values = value_map[:]

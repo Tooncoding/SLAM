@@ -86,7 +86,7 @@ class GameController:
 
         # Map update and printing if tile changed
         if index != self.previous_index:
-            self.grid.update_robot_position(pos)
+            self.grid.update_robot_position(pos, self.game_status)
             self.grid.print_map()
             self.previous_index = index
             print(self.game_status)
