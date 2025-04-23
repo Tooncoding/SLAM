@@ -1,4 +1,4 @@
-def compute_value_map(grid, game_status, risk, phi=0.9, iterations=50):
+def compute_value_map(grid, game_status, phi=0.9, iterations=100):
     WIDTH = 8
     value_map = [0.0] * (WIDTH * WIDTH)
     reward = [-1.0] * (WIDTH * WIDTH)
@@ -8,18 +8,29 @@ def compute_value_map(grid, game_status, risk, phi=0.9, iterations=50):
         if tile == 'B':
             reward[i] = -100.0
         elif tile == 'W':
-            reward[i] = 100.0
+            reward[i] = 10.0
         elif tile == 'L':
-            reward[i] = -50.0
+            reward[i] = -30.0
         elif tile == '1':
-            reward[i] = -100.0
-        elif any(risk[i]):
-            reward[i] -= 5.0
+            reward[i] = -30.0
 
-    if game_status == "Lucky Enough!":
-        reward[grid.locate(grid.robot_position)] += 10.0
-    elif game_status == "Danger!":
-        reward[grid.locate(grid.robot_position)] -= 10.0
+    index = grid.locate(grid.robot_position)
+
+    if index is not None:
+        x = index % 8
+        y = index // 8
+        neighbors = [
+            (x - 1, y), (x + 1, y),
+            (x, y - 1), (x, y + 1)
+        ]
+        for nx, ny in neighbors:
+            if 0 <= nx < 8 and 0 <= ny < 8:
+                n_index = ny * 8 + nx
+                if game_status == "Lucky Enough!":
+                    reward[n_index] += 40.0
+                elif game_status == "Danger!":
+                    reward[n_index] -= 50.0
+                    grid.mark_tile(n_index, "L")
 
     for _ in range(iterations):
         new_values = value_map[:]
@@ -51,13 +62,17 @@ def compute_value_map(grid, game_status, risk, phi=0.9, iterations=50):
     # Debug highest value
     best_index = max(range(WIDTH * WIDTH), key=lambda i: value_map[i])
     print(f"🔍 Highest value tile: ({best_index % WIDTH}, {best_index // WIDTH}) → Value: {value_map[best_index]:.2f}")
-    print(value_map)
-    return value_map
+    # print(value_map)
+    return value_map, reward
 
 
-def decide_next_move(grid, risk, chance, pos, value_map):
+def decide_next_move(grid, chance, pos, value_map, reward):
     index = grid.locate(pos)
-    policy_map = extract_policy(grid, value_map, value_map)
+    if index is None:
+        print("❌ Robot position not found on grid. Defaulting to AVOID.")
+        return "AVOID"
+
+    policy_map = extract_policy(grid, value_map, reward)
     direction = policy_map[index]
 
     move_lookup = {
@@ -67,8 +82,9 @@ def decide_next_move(grid, risk, chance, pos, value_map):
         "RIGHT": "R"
     }
 
-    print(f"🔍 Chosen direction: {direction}")
-    return move_lookup.get(direction, "AVOID")
+    move = move_lookup.get(direction, "AVOID")
+    print(f"🔍 Chosen direction: {direction} → Command: {move}")
+    return move
 
 def extract_policy(grid, value_map, reward, gamma=0.9):
     WIDTH = 8
@@ -96,5 +112,5 @@ def extract_policy(grid, value_map, reward, gamma=0.9):
                         best_dir = direction
 
         policy_map[s] = best_dir if best_dir else "NONE"
-
+    print(policy_map)
     return policy_map
